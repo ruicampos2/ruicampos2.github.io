@@ -135,23 +135,6 @@ ol{
     display: flex;
 }
 
-.barraemcima{
-    background-color: #4F5CF5;
-    list-style-type: none;
-    margin: 0;
-    padding:0;
-    overflow: hidden;
-    
-}
-.barraemcima2{
-    background-color: black;
-    list-style-type: none;
-    margin: 0;
-    padding:0;
-    overflow: hidden;
-    
-}
-
 .images {
     background-color: #4F5CF5;
     list-style-type: none;
@@ -539,20 +522,11 @@ select {
     background: none;
 }
 .content{
-    height: 100vh;
+    height: 40vh;
     background-image: url("../images/anadia.jpg");
-    background-size: cover;
+    background-size: 300px 200px;
     background-position: center;
     background-repeat: no-repeat;
-    transition: 5s;
-
-    animation-name: animate;
-    animation-direction: alternate-reverse;
-    animation-duration: 30s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: infinite;
-    animation-play-state: running;
-    animation-timing-function: ease-in-out; 
 
 }
 #top .left-content h4 {
@@ -805,38 +779,6 @@ select {
     100% {
         -webkit-filter: grayscale(0%);
         filter: grayscale(0%);
-    }
-}
-@keyframes animate{
-    0%
-    {
-        background-image: url("../images/anadia.jpg");
-        background-color: #fff;
-    }
-    20%
-    {
-        background-image: url("../images/2.png");
-        background-color: #4F5CF5;
-    }
-    40%
-    {
-        background-image: url("../images/anadia.jpg");
-        background-color: #fff;
-    }
-    60%
-    {
-        background-image: url("../images/2.png");
-        background-color: #4F5CF5;
-    }
-    80%
-    {
-        background-image: url("../images/anadia.jpg");
-        background-color: #fff;
-    }
-    100%
-    {
-        background-image: url("../images/2.png");
-        background-color: #4F5CF5;
     }
    
 }
