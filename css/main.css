@@ -36,7 +36,7 @@ body{
 .wrapper .sidebar{
   width: 200px;
   height: 100%;
-  background: #4b4276;
+  background: #2d0ad8;
   padding: 30px 0px;
   position: fixed;
 }
@@ -540,7 +540,7 @@ select {
 }
 .content{
     height: 100vh;
-    background-image: url("../images/1.png");
+    background-image: url("../images/anadia.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -810,7 +810,7 @@ select {
 @keyframes animate{
     0%
     {
-        background-image: url("../images/1.png");
+        background-image: url("../images/anadia.jpg");
         background-color: #fff;
     }
     20%
@@ -820,7 +820,7 @@ select {
     }
     40%
     {
-        background-image: url("../images/1.png");
+        background-image: url("../images/anadia.jpg");
         background-color: #fff;
     }
     60%
@@ -830,7 +830,7 @@ select {
     }
     80%
     {
-        background-image: url("../images/1.png");
+        background-image: url("../images/anadia.jpg");
         background-color: #fff;
     }
     100%
