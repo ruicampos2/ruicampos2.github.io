@@ -422,6 +422,20 @@ img{
   margin-right: auto;
   
 }
+.table-responsive{
+  width: 100% !important;
+}
+
+.table {
+    border: 1px solid rgb(12, 2, 2);
+    width: 50% !important; /*Importante manter o !important rs */
+    margin: auto;
+}
+
+.table-status {
+    margin-top: 20px;
+    margin-bottom: 20px !important;
+}
 p{
     font-size: 18px;
 }
@@ -524,7 +538,7 @@ select {
 .content{
     height: 40vh;
     background-image: url("../images/anadia.jpg");
-    background-size: 300px 200px;
+    background-size: 300px 250px;
     background-position: center;
     background-repeat: no-repeat;
 
@@ -662,7 +676,25 @@ select {
     height: 100%;
     cursor: pointer;
   }
-  
+
+
+.barraemcima{
+    background-color: #4F5CF5;
+    list-style-type: none;
+    margin: 0;
+    padding:0;
+    overflow: hidden;
+    
+}
+.barraemcima2{
+    background-color: black;
+    list-style-type: none;
+    margin: 0;
+    padding:0;
+    overflow: hidden;
+    
+}
+
   .rating label:last-child {
     position: static;
   }

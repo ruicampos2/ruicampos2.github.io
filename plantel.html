@@ -12,18 +12,46 @@
     </head>
 
     <body>
-        <div class="wrapper">
-            <div class="sidebar">
-                <h2>Manager's Page</h2>
-                <ul>
-                    <li><a href="index.html" class= "clube">Clube</a></li><br>
-                    <li><a href="plantel.html" class="plantel">Plantel</li><br>
-                    <li><a href="jogos.html"><i class="jogos"></i>Jogos</a></li><br>
-                    <li><a href="estatisticas.html"><i class="estatisticas"></i>Estatísticas</a></li><br>
-                    <li><a href="exercicios.html"><i class="exercicios"></i>Exercícios</a></li><br>
-                    <li><a href="dados.html"><i class="dados"></i>Dados</a></li><br>
-                </ul> 
-            </div>
+        <div class= "barraemcima">
+            <ul_navbar><a href="index.html" class= "button">Clube       </a></ul_navbar>
+            
+            <ul_navbar><a href="plantel.html" class="button">Plantel        </a></ul_navbar>
+            <ul_navbar><a href="jogos.html" class="button">Jogos        </a></ul_navbar>
+            <ul_navbar><a href="estatisticas.html" class ="button">Estatísticas     </a></ul_navbar>
+            <ul_navbar><a href="exercicios.html" class ="button">Exercícios     </a></ul_navbar>
+            <ul_navbar><a href="dados.html" class ="button">Dados       </a></ul_navbar>
+        </div>
+        
+        <h1>PLANTEL</h1>
+        
+        <form action="criarjogador.html">
+            <input type="submit" value="Criar jogador">
+        </form>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <div class="container">
+        <div class="table-responsive">
+            <table class="table table-status">
+                <thead>
+                    <tr class="status">
+                        <th class="cor">Nome</th>
+                        <th class="cor">Idade</th>
+                        <th class="cor">Posição</th>
+                        <th class="cor">Jogos</th>
+                        <th class="cor">Golos</th>
+                        <th class="cor">Assistências</th>
+                        <th class="cor">Classificação Média</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
         </div>
 
 
