@@ -1,0 +1,11 @@
+Model Information:
+* title:	Football Player - Portugal
+* source:	https://sketchfab.com/3d-models/football-player-portugal-5f1a05f9c0964821bbb5322aee27a34e
+* author:	neshallads (https://sketchfab.com/neshallads)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Football Player - Portugal" (https://sketchfab.com/3d-models/football-player-portugal-5f1a05f9c0964821bbb5322aee27a34e) by neshallads (https://sketchfab.com/neshallads) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,0 +1,838 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<!--
+
+		threejs_ex_02_01.html
+
+		J. Madeira - March 2022
+
+		Adapted / simplified from the Learning Three.js book examples
+
+-->
+
+<head>
+
+	<title>project</title>
+
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+	<style>
+		body {
+
+			background-color: #ffffff;
+
+			/* To use the complete page */
+
+			margin: 0px;
+
+			overflow: hidden;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<!-- Div which will hold the renderer output -->
+
+	<div id="WebGL-output"> </div>
+
+	<!-- The library --- Can be a local version -->
+
+	<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+	<script type="importmap">
+		{
+			"imports": {
+				"three": "https://threejs.org/build/three.module.js"		
+			}
+		}
+	</script>
+
+
+
+	<!-- Javascript code that runs the Three.js example -->
+
+	<script type="module">
+
+		import * as THREE from 'three';
+		import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
+		import { GUI } from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
+		import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/OrbitControls.js';
+
+//NEW OBJETIVES 17/04-> FAZER LIVRES CURTOS ADS 
+
+		function init() {
+
+			// The SCENE
+			//Materials: Phong, Lambert 
+
+			var scene = new THREE.Scene();
+
+
+			// The GROUND plane
+			let settings;
+
+
+
+			//----
+			const fieldGeometry = new THREE.PlaneGeometry(200, 120, 1, 1);
+
+			const fieldMaterial = new THREE.MeshLambertMaterial({ color: 0x064000 }); // verde
+			const field = new THREE.Mesh(fieldGeometry, fieldMaterial);
+			field.rotation.x = -Math.PI / 2;
+			scene.add(field);
+			/*/----------jogador-----------
+			const player = new GLTFLoader();
+			player.load( 'jogador/jogador.gltf', function ( gltf ) {
+
+				scene.add( gltf.scene );
+			
+			}, undefined, function ( error ) {
+			
+				console.error( error );
+			
+			} );
+			*/
+
+
+
+
+			//QUADRO PARA DECIDIR
+
+
+
+			// Position the cube and add it to the scene
+			// TODO: What happens if you comment out the next three lines of code?
+
+
+			// A BOLA
+			var sphereGeometry = new THREE.SphereGeometry(1, 10, 12);
+			var sphereMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+			var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+
+			// Position the sphere and add it to the scene
+			// TODO: What happens if you comment out the next three lines of code?
+			sphere.position.x = -100;
+			sphere.position.y = 0;
+			sphere.position.z = 60;
+			scene.add(sphere);
+
+			//linhas
+			const geometry = new THREE.CylinderGeometry(1, 1, 0.5, 32);
+			const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+			const cylinder = new THREE.Mesh(geometry, material);
+			scene.add(cylinder);
+
+			//círculo do meio campo
+			const geometrymc = new THREE.CylinderGeometry(10, 10, 0.5, 32, 10, true);
+			const materialmc = new THREE.MeshBasicMaterial({ color: 0xffffff });
+			const meiocampo = new THREE.Mesh(geometrymc, materialmc);
+			scene.add(meiocampo);
+
+
+			//linha central
+			const materiallinha = new THREE.LineBasicMaterial({
+				color: 0xffffff
+			});
+
+			const points = [];
+			points.push(new THREE.Vector3(0, 0, -60));
+			points.push(new THREE.Vector3(0, 0, 0));
+			points.push(new THREE.Vector3(0, 0, 60));
+
+			const geometrylinha = new THREE.BufferGeometry().setFromPoints(points);
+
+			const line = new THREE.Line(geometrylinha, materiallinha);
+			scene.add(line);
+			//------------------------------------------------------------------
+			//AREA DIREITA
+			const points1 = [];
+			points1.push(new THREE.Vector3(60, 0.01, 40));
+			points1.push(new THREE.Vector3(80, 0.01, 40));
+			points1.push(new THREE.Vector3(100, 0.01, 40));
+
+			const area1 = new THREE.BufferGeometry().setFromPoints(points1);
+
+			const linearea1 = new THREE.Line(area1, materiallinha);
+			scene.add(linearea1);
+
+			const points2 = [];
+			points2.push(new THREE.Vector3(60, 0.01, -40));
+			points2.push(new THREE.Vector3(80, 0.01, -40));
+			points2.push(new THREE.Vector3(100, 0.01, -40));
+
+			const area2 = new THREE.BufferGeometry().setFromPoints(points2);
+
+			const linearea2 = new THREE.Line(area2, materiallinha);
+			scene.add(linearea2);
+
+			const points6 = [];
+			points6.push(new THREE.Vector3(60, 0.01, -40));
+			points6.push(new THREE.Vector3(60, 0.01, 0));
+			points6.push(new THREE.Vector3(60, 0.01, 40));
+
+			const area6 = new THREE.BufferGeometry().setFromPoints(points6);
+
+			const linearea6 = new THREE.Line(area6, materiallinha);
+			scene.add(linearea6);
+
+			//PEQUENA ÁREA
+
+			const points3 = [];
+			points3.push(new THREE.Vector3(80, 0.01, -20));
+			points3.push(new THREE.Vector3(90, 0.01, -20));
+			points3.push(new THREE.Vector3(100, 0.01, -20));
+
+			const area3 = new THREE.BufferGeometry().setFromPoints(points3);
+
+			const linearea3 = new THREE.Line(area3, materiallinha);
+			scene.add(linearea3);
+
+			const points4 = [];
+			points4.push(new THREE.Vector3(80, 0.01, 20));
+			points4.push(new THREE.Vector3(90, 0.01, 20));
+			points4.push(new THREE.Vector3(100, 0.01, 20));
+
+			const area4 = new THREE.BufferGeometry().setFromPoints(points4);
+
+			const linearea4 = new THREE.Line(area4, materiallinha);
+			scene.add(linearea4);
+
+			const points5 = [];
+			points5.push(new THREE.Vector3(80, 0.01, -20));
+			points5.push(new THREE.Vector3(80, 0.01, 0));
+			points5.push(new THREE.Vector3(80, 0.01, 20));
+
+			const area5 = new THREE.BufferGeometry().setFromPoints(points5);
+
+			const linearea5 = new THREE.Line(area5, materiallinha);
+			scene.add(linearea5);
+			//FIM PEQUENA ÁREA
+			//--------------------------------------------------------------------------
+			//AREA ESQUERDA
+			const points7 = [];
+			points7.push(new THREE.Vector3(-60, 0.01, 40));
+			points7.push(new THREE.Vector3(-80, 0.01, 40));
+			points7.push(new THREE.Vector3(-100, 0.01, 40));
+
+			const area7 = new THREE.BufferGeometry().setFromPoints(points7);
+
+			const linearea7 = new THREE.Line(area7, materiallinha);
+			scene.add(linearea7);
+
+			const points8 = [];
+			points8.push(new THREE.Vector3(-60, 0.01, -40));
+			points8.push(new THREE.Vector3(-80, 0.01, -40));
+			points8.push(new THREE.Vector3(-100, 0.01, -40));
+
+			const area8 = new THREE.BufferGeometry().setFromPoints(points8);
+
+			const linearea8 = new THREE.Line(area8, materiallinha);
+			scene.add(linearea8);
+
+			const points9 = [];
+			points9.push(new THREE.Vector3(-60, 0.01, -40));
+			points9.push(new THREE.Vector3(-60, 0.01, 0));
+			points9.push(new THREE.Vector3(-60, 0.01, 40));
+
+			const area9 = new THREE.BufferGeometry().setFromPoints(points9);
+
+			const linearea9 = new THREE.Line(area9, materiallinha);
+			scene.add(linearea9);
+
+			//PEQUENA ÁREA
+
+			const points10 = [];
+			points10.push(new THREE.Vector3(-80, 0.01, -20));
+			points10.push(new THREE.Vector3(-90, 0.01, -20));
+			points10.push(new THREE.Vector3(-100, 0.01, -20));
+
+			const area10 = new THREE.BufferGeometry().setFromPoints(points10);
+
+			const linearea10 = new THREE.Line(area10, materiallinha);
+			scene.add(linearea10);
+
+			const points11 = [];
+			points11.push(new THREE.Vector3(-80, 0.01, 20));
+			points11.push(new THREE.Vector3(-90, 0.01, 20));
+			points11.push(new THREE.Vector3(-100, 0.01, 20));
+
+			const area11 = new THREE.BufferGeometry().setFromPoints(points11);
+
+			const linearea11 = new THREE.Line(area11, materiallinha);
+			scene.add(linearea11);
+
+			const points12 = [];
+			points12.push(new THREE.Vector3(-80, 0.01, -20));
+			points12.push(new THREE.Vector3(-80, 0.01, 0));
+			points12.push(new THREE.Vector3(-80, 0.01, 20));
+
+			const area12 = new THREE.BufferGeometry().setFromPoints(points12);
+
+			const linearea12 = new THREE.Line(area12, materiallinha);
+			scene.add(linearea12);
+
+			//FIM PEQUENA ÁREA
+			//------------------------------------------------------------------------
+			//baliza 1
+			const balizageometry = new THREE.BoxGeometry(5, 10, 20);
+			const balizamaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+			const baliza1 = new THREE.Mesh(balizageometry, balizamaterial);
+			baliza1.position.x = 100;
+			baliza1.position.y = 5;
+			baliza1.position.z = 0;
+
+			scene.add(baliza1);
+
+			//baliza 2
+			const baliza2 = new THREE.Mesh(balizageometry, balizamaterial);
+			baliza2.position.x = -100;
+			baliza2.position.y = 5;
+			baliza2.position.z = 0;
+
+			scene.add(baliza2);
+			//-----------------------JOGADORES----------------------------------------------------
+			const geometryPlayer = new THREE.CylinderGeometry(2, 2, 5, 30);
+
+			const materialPlayer = new THREE.MeshLambertMaterial({ color: 0xff0000 });
+			const GR = new THREE.Mesh(geometryPlayer, materialPlayer);
+			GR.position.x = 90;
+			GR.position.y = 2.5;
+			GR.position.z = 0;
+			scene.add(GR);
+			//---
+			const materialDC = new THREE.MeshLambertMaterial({ color: 0xff00ff });
+			const DC = new THREE.Mesh(geometryPlayer, materialDC);
+			DC.position.x = 50;
+			DC.position.y = 2.5;
+			DC.position.z = 0;
+			scene.add(DC);
+			//---
+			const materialDCD = new THREE.MeshLambertMaterial({ color: 0xffff00 });
+			const DCD = new THREE.Mesh(geometryPlayer, materialDCD);
+			DCD.position.x = 45;
+			DCD.position.y = 2.5;
+			DCD.position.z = -25;
+			scene.add(DCD);
+			//---
+			const materialDCE = new THREE.MeshLambertMaterial({ color: 0x0f0000 });
+			const DCE = new THREE.Mesh(geometryPlayer, materialDCE);
+			DCE.position.x = 45;
+			DCE.position.y = 2.5;
+			DCE.position.z = 25;
+			scene.add(DCE);
+			//---
+			const materialLD = new THREE.MeshLambertMaterial({ color: 0xf00000 });
+			const LD = new THREE.Mesh(geometryPlayer, materialLD);
+			LD.position.x = 20;
+			LD.position.y = 2.5;
+			LD.position.z = -45;
+			scene.add(LD);
+			//---
+			const materialLE = new THREE.MeshLambertMaterial({ color: 0xef6000 });
+			const LE = new THREE.Mesh(geometryPlayer, materialLE);
+			LE.position.x = 20;
+			LE.position.y = 2.5;
+			LE.position.z = 45;
+			scene.add(LE);
+			//---
+			const materialMCE = new THREE.MeshLambertMaterial({ color: 0xa000dd0 });
+			const MCE = new THREE.Mesh(geometryPlayer, materialMCE);
+			MCE.position.x = 30;
+			MCE.position.y = 2.5;
+			MCE.position.z = 15;
+			scene.add(MCE);
+			//---
+			const materialMCD = new THREE.MeshLambertMaterial({ color: 0x0ff050 });
+			const MCD = new THREE.Mesh(geometryPlayer, materialMCD);
+			MCD.position.x = 30;
+			MCD.position.y = 2.5;
+			MCD.position.z = -15;
+			scene.add(MCD);
+			//---
+			const materialMCO = new THREE.MeshLambertMaterial({ color: 0x4f4f4f });
+			const MCO = new THREE.Mesh(geometryPlayer, materialMCO);
+			MCO.position.x = 20;
+			MCO.position.y = 2.5;
+			MCO.position.z = 0;
+			scene.add(MCO);
+			//---
+			const materialPLD = new THREE.MeshLambertMaterial({ color: 0x450000 });
+			const PLD = new THREE.Mesh(geometryPlayer, materialPLD);
+			PLD.position.x = 5;
+			PLD.position.y = 2.5;
+			PLD.position.z = -15;
+			scene.add(PLD);
+			//---
+			const materialPLE = new THREE.MeshLambertMaterial({ color: 0xffaf00 });
+			const PLE = new THREE.Mesh(geometryPlayer, materialPLE);
+			PLE.position.x = 5;
+			PLE.position.y = 2.5;
+			PLE.position.z = 15;
+			scene.add(PLE);
+			//-----FIM DOS JOGADORES--------------------------------------------------------------
+
+
+
+
+
+
+			// The CAMERA
+
+			// --- Where the viewer is and how he is looking at the scene
+
+			var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+			// Position the camera
+
+			camera.position.x = 0;			//ver por detrás das balizas			//melhor camera: 0,100,150
+			camera.position.y = 200;		//vista aérea							
+			camera.position.z = 0;
+
+			// Point the camera to the center of the scene
+
+			camera.lookAt(scene.position);
+
+			scene.add(camera)
+
+			// The RENDERER --- To display the scene on the Web page
+
+			var renderer = new THREE.WebGLRenderer({ antialias: true });
+
+			renderer.setClearColor(new THREE.Color(0x004444));
+
+			renderer.setPixelRatio(window.devicePixelRatio);
+
+			renderer.setSize(window.innerWidth, window.innerHeight);
+
+			const controls = new OrbitControls(camera, renderer.domElement);
+
+			//controls.update() must be called after any manual changes to the camera's transform
+			camera.position.set(0, 20, 100);
+			controls.update();
+
+			//spotlight
+			var spotlight = new THREE.SpotLight(0xffffff)
+			spotlight.castShadow = true
+			spotlight.position.set(50, 100, 0)
+			scene.add(spotlight)
+			var spotlight2 = new THREE.SpotLight(0xffffff)
+			spotlight2.castShadow = true
+			spotlight2.position.set(-50, 100, 0)
+			scene.add(spotlight2)
+
+			renderer.shadowMap.enabled = true;
+
+			field.receiveShadow = true;
+			GR.castShadow = true;
+			GR.receiveShadow = true;
+			DC.castShadow = true;
+			DC.receiveShadow = true;
+			DCD.castShadow = true;
+			DCD.receiveShadow = true;
+			DCE.castShadow = true;
+			DCE.receiveShadow = true;
+			LD.castShadow = true;
+			LD.receiveShadow = true;
+			LE.castShadow = true;
+			LE.receiveShadow = true;
+			MCE.castShadow = true;
+			MCE.receiveShadow = true;
+			MCD.castShadow = true;
+			MCD.receiveShadow = true;
+			MCO.castShadow = true;
+			MCO.receiveShadow = true;
+			PLE.castShadow = true;
+			PLE.receiveShadow = true;
+			PLD.castShadow = true;
+			PLD.receiveShadow = true;
+
+			sphere.castShadow = true;
+			sphere.receiveShadow = true;
+
+
+			// Add the output of the renderer to the html element
+
+
+			document.getElementById("WebGL-output").appendChild(renderer.domElement);
+
+			// Render the scene
+
+			renderer.render(scene, camera);
+			var step = 0;
+			// Update model features and render the scene 
+			//renderScene() 
+			createPanel()
+
+
+
+
+			//PAINEL DE ESCOLHA
+			function createPanel() {
+
+				const panel = new GUI({ width: 310 });
+
+				const folder1 = panel.addFolder('Ofensivas');
+				const folder2 = panel.addFolder('Defensivas');
+
+				settings = {
+					'11 inicial': false,
+					'Cantos Ofensivos': false,
+					'Livres Ofensivos': false,
+					'Penáltis': false,
+					'Cantos Defensivos': false,
+					'Livres Defensivos': false,
+				};
+
+				folder1.add(settings, '11 inicial').onChange(eleven);
+				folder1.add(settings, 'Cantos Ofensivos').onChange(cantof);
+				folder1.add(settings, 'Livres Ofensivos').onChange(livreof);
+				folder1.add(settings, 'Penáltis').onChange(penaltis);
+				folder2.add(settings, 'Cantos Defensivos').onChange(cantdef);
+				folder2.add(settings, 'Livres Defensivos').onChange(livredef);
+
+				folder1.open();
+				folder2.open();
+
+				function cantof() {
+
+					step += 0.01;
+					// Bounce the sphere up and down
+					//-------- 
+					//movimento bola e jogadores 1º canto
+					sphere.position.z = 35 + (25 * Math.cos(step));
+					sphere.position.x = -90 + (-10 * Math.cos(step));
+					sphere.position.y = 0.5 + (10 * Math.abs(Math.sin(step)));
+					//JOGADORES A MEXEREM-SE PARA O 1º CANTO
+					DC.position.z = 5 + (-5 * Math.cos(step));
+					DC.position.x = -15 + (65 * Math.cos(step));
+					//DCD.position.z = 5 + (-5 * Math.cos(step)); 
+					//DCD.position.x = 45 + ( 65* Math.cos(step)); 
+
+					//BATEDOR
+					MCD.position.z = 25 + (-45 * Math.cos(step));
+					MCD.position.x = -40 + (70 * Math.cos(step));
+
+					PLD.position.z = 10 + (-30 * Math.cos(step));
+					PLD.position.x = -40 + (50 * Math.cos(step));
+
+					//---------------------------------------------------------
+
+					// Render using requestAnimationFrame 
+					requestAnimationFrame(cantof);
+					renderer.render(scene, camera);
+					
+				}
+
+				function livreof() {
+
+					//step += 0.01; 
+					// Bounce the sphere up and down
+					//-------- 
+					//movimento bola e jogadores 1º canto
+					//sphere.position.z = 35 + (25 * Math.cos(step)); 
+					//sphere.position.x = -90 + (-10 * Math.cos(step)); 
+					//sphere.position.y = 0.5 + (10 * Math.abs(Math.sin(step))); 
+					//JOGADORES A MEXEREM-SE PARA O 1º CANTO
+					sphere.position.x = -35;
+					sphere.position.y = 0.5;
+					sphere.position.z = 50;
+
+					GR.position.x = 60;
+					GR.position.y = 2.5;
+					GR.position.z = 0;
+
+					DC.position.x = -60;
+					DC.position.y = 2.5;
+					DC.position.z = -7;
+
+					DCD.position.x = -10;
+					DCD.position.y = 2.5;
+					DCD.position.z = -15;
+
+					DCE.position.x = -60;
+					DCE.position.y = 2.5;
+					DCE.position.z = 8;
+
+					LD.position.x = -40;
+					LD.position.y = 2.5;
+					LD.position.z = -15;
+
+					LE.position.x = -10;
+					LE.position.y = 2.5;
+					LE.position.z = 15;
+
+					MCE.position.x = -60;
+					MCE.position.y = 2.5;
+					MCE.position.z = -20;
+
+					MCD.position.x = -25;
+					MCD.position.y = 2.5;
+					MCD.position.z = 50;
+
+					MCO.position.x = -60;
+					MCO.position.y = 2.5;
+					MCO.position.z = 0;
+
+					PLD.position.x = -60;
+					PLD.position.y = 2.5;
+					PLD.position.z = -15;
+
+					PLE.position.x = -60;
+					PLE.position.y = 2.5;
+					PLE.position.z = 15;
+
+					//---------------------------------------------------------
+
+					// Render using requestAnimationFrame 
+					requestAnimationFrame(livreof);
+					renderer.render(scene, camera);
+				}
+				//-------------------DONE------------------------
+				function eleven() { //11 inicial
+					sphere.position.x = 0;
+					sphere.position.y = 0.5;
+					sphere.position.z = 0;
+
+					GR.position.x = 90;
+					GR.position.y = 2.5;
+					GR.position.z = 0;
+
+
+					DC.position.x = 50;
+					DC.position.y = 2.5;
+					DC.position.z = 0;
+
+					DCD.position.x = 45;
+					DCD.position.y = 2.5;
+					DCD.position.z = -25;
+
+					DCE.position.x = 45;
+					DCE.position.y = 2.5;
+					DCE.position.z = 25;
+
+					LD.position.x = 20;
+					LD.position.y = 2.5;
+					LD.position.z = -45;
+
+					LE.position.x = 20;
+					LE.position.y = 2.5;
+					LE.position.z = 45;
+
+					MCE.position.x = 30;
+					MCE.position.y = 2.5;
+					MCE.position.z = 15;
+
+					MCD.position.x = 30;
+					MCD.position.y = 2.5;
+					MCD.position.z = -15;
+
+					MCO.position.x = 20;
+					MCO.position.y = 2.5;
+					MCO.position.z = 0;
+
+					PLD.position.x = 5;
+					PLD.position.y = 2.5;
+					PLD.position.z = -15;
+
+					PLE.position.x = 5;
+					PLE.position.y = 2.5;
+					PLE.position.z = 15;
+
+					//---------------------------------------------------------
+
+					// Render using requestAnimationFrame 
+					requestAnimationFrame(eleven);
+					renderer.render(scene, camera);
+				}
+
+				function penaltis() { //11 inicial
+					sphere.position.x = -70;
+					sphere.position.y = 0.5;
+					sphere.position.z = 0;
+
+					GR.position.x = 90;
+					GR.position.y = 2.5;
+					GR.position.z = 0;
+
+
+					DC.position.x = 50;
+					DC.position.y = 2.5;
+					DC.position.z = 0;
+
+					DCD.position.x = 45;
+					DCD.position.y = 2.5;
+					DCD.position.z = -25;
+
+					DCE.position.x = 45;
+					DCE.position.y = 2.5;
+					DCE.position.z = 25;
+
+					LD.position.x = 20;
+					LD.position.y = 2.5;
+					LD.position.z = -45;
+
+					LE.position.x = 20;
+					LE.position.y = 2.5;
+					LE.position.z = 45;
+
+					MCE.position.x = 30;
+					MCE.position.y = 2.5;
+					MCE.position.z = 15;
+
+					MCD.position.x = -60;
+					MCD.position.y = 2.5;
+					MCD.position.z = 5;
+
+					MCO.position.x = 20;
+					MCO.position.y = 2.5;
+					MCO.position.z = 0;
+
+					PLD.position.x = 5;
+					PLD.position.y = 2.5;
+					PLD.position.z = -15;
+
+					PLE.position.x = 5;
+					PLE.position.y = 2.5;
+					PLE.position.z = 15;
+
+					//---------------------------------------------------------
+
+					// Render using requestAnimationFrame 
+					requestAnimationFrame(penaltis);
+					renderer.render(scene, camera);
+				}
+
+				function cantdef() { //cantos defensivos
+					sphere.position.x = 100;
+					sphere.position.y = 0.5;
+					sphere.position.z = 60;
+
+					GR.position.x = 95;
+					GR.position.y = 2.5;
+					GR.position.z = 0;
+
+					DC.position.x = 80;
+					DC.position.y = 2.5;
+					DC.position.z = 0;
+
+					DCD.position.x = 80;
+					DCD.position.y = 2.5;
+					DCD.position.z = 5;
+
+					DCE.position.x = 80;
+					DCE.position.y = 2.5;
+					DCE.position.z = 10;
+
+					LD.position.x = 85;
+					LD.position.y = 2.5;
+					LD.position.z = -10;
+
+					LE.position.x = 95;
+					LE.position.y = 2.5;
+					LE.position.z = 15;
+
+					MCE.position.x = 80;
+					MCE.position.y = 2.5;
+					MCE.position.z = -5;
+
+					MCD.position.x = 70;
+					MCD.position.y = 2.5;
+					MCD.position.z = 0;
+
+					MCO.position.x = 70;
+					MCO.position.y = 2.5;
+					MCO.position.z = 5;
+
+					PLD.position.x = 5;
+					PLD.position.y = 2.5;
+					PLD.position.z = -50;
+
+					PLE.position.x = 5;
+					PLE.position.y = 2.5;
+					PLE.position.z = -40;
+
+					//---------------------------------------------------------
+
+					// Render using requestAnimationFrame 
+					requestAnimationFrame(cantdef);
+					renderer.render(scene, camera);
+				}
+				function livredef() { //livres defensivos
+					sphere.position.x = 35;
+					sphere.position.y = 0.5;
+					sphere.position.z = 50;
+
+					GR.position.x = 90;
+					GR.position.y = 2.5;
+					GR.position.z = 0;
+
+					DC.position.x = 60;
+					DC.position.y = 2.5;
+					DC.position.z = 0;
+
+					DCD.position.x = 60;
+					DCD.position.y = 2.5;
+					DCD.position.z = -10;
+
+					DCE.position.x = 60;
+					DCE.position.y = 2.5;
+					DCE.position.z = -20;
+
+					LD.position.x = 40;
+					LD.position.y = 2.5;
+					LD.position.z = -15;
+
+					LE.position.x = 60;
+					LE.position.y = 2.5;
+					LE.position.z = 15;
+
+					MCE.position.x = 60;
+					MCE.position.y = 2.5;
+					MCE.position.z = -15;
+
+					MCD.position.x = 60;
+					MCD.position.y = 2.5;
+					MCD.position.z = -5;
+
+					MCO.position.x = 60;
+					MCO.position.y = 2.5;
+					MCO.position.z = 5;
+
+					PLD.position.x = 5;
+					PLD.position.y = 2.5;
+					PLD.position.z = -50;
+
+					PLE.position.x = 45;
+					PLE.position.y = 2.5;
+					PLE.position.z = 40;
+
+					//---------------------------------------------------------
+
+					// Render using requestAnimationFrame 
+					requestAnimationFrame(livredef);
+					renderer.render(scene, camera);
+				}
+
+
+
+			}
+
+
+
+		}
+
+		window.onload = init
+
+
+	</script>
+
+</body>
+
+</html>
