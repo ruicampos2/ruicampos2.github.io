@@ -81,8 +81,8 @@
 			//----
 			const fieldGeometry = new THREE.PlaneGeometry(220, 150, 1, 1);
 
-			var relva = new THREE.TextureLoader().load("./textures/textura.jpg");
-			const fieldMaterial = new THREE.MeshBasicMaterial(); // verde
+			var relva = new THREE.TextureLoader().load("./textures/relva.jpg");
+			const fieldMaterial = new THREE.MeshPhongMaterial(); // verde
 			fieldMaterial.map = relva;
 			const field = new THREE.Mesh(fieldGeometry, fieldMaterial);
 			field.rotation.x = -Math.PI / 2;
@@ -92,77 +92,99 @@
 			//----------jogadores-----------
 			const geometryPlayer = new THREE.CylinderGeometry(2, 2, 5, 30);
 
+			var num1 = new THREE.TextureLoader().load("./textures/1.png");
 			const materialPlayer = new THREE.MeshLambertMaterial({ color: 0xff0000 });
+			materialPlayer.map = num1;
 			const GR = new THREE.Mesh(geometryPlayer, materialPlayer);
 			GR.position.x = 90;
 			GR.position.y = 2.5;
 			GR.position.z = 0;
 			scene.add(GR);
 			//---
+			var num4 = new THREE.TextureLoader().load("./textures/4.png");
 			const materialDC = new THREE.MeshLambertMaterial({ color: 0xff00ff });
+			materialDC.map = num4;
 			const DC = new THREE.Mesh(geometryPlayer, materialDC);
 			DC.position.x = 50;
 			DC.position.y = 2.5;
 			DC.position.z = 0;
 			scene.add(DC);
 			//---
+			var num3 = new THREE.TextureLoader().load("./textures/3.png");
 			const materialDCD = new THREE.MeshLambertMaterial({ color: 0xffff00 });
+			materialDCD.map = num3;
 			const DCD = new THREE.Mesh(geometryPlayer, materialDCD);
 			DCD.position.x = 45;
 			DCD.position.y = 2.5;
 			DCD.position.z = -25;
 			scene.add(DCD);
 			//---
-			const materialDCE = new THREE.MeshLambertMaterial({ color: 0x0f0000 });
+			var num5 = new THREE.TextureLoader().load("./textures/5.png");
+			const materialDCE = new THREE.MeshLambertMaterial({ color: 0xffffff });
+			materialDCE.map = num5;
 			const DCE = new THREE.Mesh(geometryPlayer, materialDCE);
 			DCE.position.x = 45;
 			DCE.position.y = 2.5;
 			DCE.position.z = 25;
 			scene.add(DCE);
 			//---
+			var num2 = new THREE.TextureLoader().load("./textures/2.png");
 			const materialLD = new THREE.MeshLambertMaterial({ color: 0xf00000 });
+			materialLD.map = num2;
 			const LD = new THREE.Mesh(geometryPlayer, materialLD);
 			LD.position.x = 20;
 			LD.position.y = 2.5;
 			LD.position.z = -45;
 			scene.add(LD);
 			//---
+			var num11 = new THREE.TextureLoader().load("./textures/11.png");
 			const materialLE = new THREE.MeshLambertMaterial({ color: 0xef6000 });
+			materialLE.map = num11;
 			const LE = new THREE.Mesh(geometryPlayer, materialLE);
 			LE.position.x = 20;
 			LE.position.y = 2.5;
 			LE.position.z = 45;
 			scene.add(LE);
 			//---
+			var num6 = new THREE.TextureLoader().load("./textures/6.png");
 			const materialMCE = new THREE.MeshLambertMaterial({ color: 0xa000dd0 });
+			materialMCE.map = num6;
 			const MCE = new THREE.Mesh(geometryPlayer, materialMCE);
 			MCE.position.x = 30;
 			MCE.position.y = 2.5;
 			MCE.position.z = 15;
 			scene.add(MCE);
 			//---
+			var num8 = new THREE.TextureLoader().load("./textures/8.png");
 			const materialMCD = new THREE.MeshLambertMaterial({ color: 0x0ff050 });
+			materialMCD.map = num8;
 			const MCD = new THREE.Mesh(geometryPlayer, materialMCD);
 			MCD.position.x = 30;
 			MCD.position.y = 2.5;
 			MCD.position.z = -15;
 			scene.add(MCD);
 			//---
+			var num10 = new THREE.TextureLoader().load("./textures/10.png");
 			const materialMCO = new THREE.MeshLambertMaterial({ color: 0x4f4f4f });
+			materialMCO.map = num10;
 			const MCO = new THREE.Mesh(geometryPlayer, materialMCO);
 			MCO.position.x = 20;
 			MCO.position.y = 2.5;
 			MCO.position.z = 0;
 			scene.add(MCO);
 			//---
-			const materialPLD = new THREE.MeshLambertMaterial({ color: 0x450000 });
+			var num9 = new THREE.TextureLoader().load("./textures/9.png");
+			const materialPLD = new THREE.MeshLambertMaterial({ color: 0x550000 });
+			materialPLD.map = num9;
 			const PLD = new THREE.Mesh(geometryPlayer, materialPLD);
 			PLD.position.x = 5;
 			PLD.position.y = 2.5;
 			PLD.position.z = -15;
 			scene.add(PLD);
 			//---
+			var num7 = new THREE.TextureLoader().load("./textures/7.png");
 			const materialPLE = new THREE.MeshLambertMaterial({ color: 0xffaf00 });
+			materialPLE.map = num7;
 			const PLE = new THREE.Mesh(geometryPlayer, materialPLE);
 			PLE.position.x = 5;
 			PLE.position.y = 2.5;
@@ -492,6 +514,8 @@
 
 			renderer.shadowMap.enabled = true;
 
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 			field.receiveShadow = true;
 
 			GR.castShadow = true;
@@ -563,7 +587,7 @@
 				folder2.add(settings, 'Curto 1').onChange(cantofcurt1);
 				folder2.add(settings, 'Curto 2').onChange(cantofcurt2);
 				folder2.add(settings, 'Longo').onChange(cantof);
-				folder3.add(settings, 'Frontal 1').onChange(livreof);
+				folder3.add(settings, 'Frontal 1').onChange(livreoffrontal);
 				folder3.add(settings, 'Frontal 2').onChange(livreoffrontal2);
 				folder3.add(settings, 'Longo').onChange(livreof);
 				folder1.add(settings, 'Penáltis').onChange(penaltis);
@@ -855,6 +879,66 @@
 
 					// Render using requestAnimationFrame 
 					requestAnimationFrame(livreof);
+					renderer.render(scene, camera);
+				}
+
+				function livreoffrontal() {
+
+					step += 0.009; 
+					// Bounce the sphere up and down
+					//-------- 
+					//1ºpasse
+					sphere.position.z = 8 + (20 * Math.cos(step)); 
+					sphere.position.x = -45 + (5 * Math.cos(step)); 
+					sphere.position.y = 0.5;
+					//posicionamento
+					position(GR, 60, 2.5, 0);
+					position(DCD, -10, 2.5, 15);
+					position(DC, -60, 2.5, -7);
+					position(DCE, -60, 2.5, -16);
+					position(LD, -10, 2.5, -15);
+					position(LE, -30, 2.5, 5);
+					position(MCE, -60, 2.5, -25);
+					position(MCD, -38, 2.5, 27);
+					position(MCO, -60, 2.5, 0);
+					position(PLD, -60, 2.5, -20);
+					position(PLE, -60, 2.5, -12);
+	
+
+					// Atualize a posição da esfera na linha
+	
+					//---------------------------------------------------------
+					//MOVIMENTAÇÕES
+					PLE.position.z = -20;
+					PLE.position.x = -65 + (5 * Math.cos(step));
+					PLE.position.y = 2.5;
+					
+					DCE.position.z = 0;
+					DCE.position.x = -65 + (5 * Math.cos(step));
+					DCE.position.y = 2.5;
+
+					MCO.position.z = -4;
+					MCO.position.x = -65 + (5 * Math.cos(step));
+					MCO.position.y = 2.5;
+
+					DC.position.z = -9;
+					DC.position.x = -65 + (5 * Math.cos(step));
+					DC.position.y = 2.5;
+
+					MCE.position.z = -20 + (-5 * Math.cos(step));
+					MCE.position.x = -55 + (-5 * Math.cos(step));
+					MCE.position.y = 2.5;
+					
+					PLD.position.z = -15; 
+					PLD.position.x = -65 + (5 * Math.cos(step));
+					PLD.position.y = 2.5;
+
+					LE.position.z = 25; 
+					LE.position.x = -55 + (5 * Math.cos(step));
+					LE.position.y = 2.5;
+
+					// Render using requestAnimationFrame 
+					requestAnimationFrame(livreoffrontal);
 					renderer.render(scene, camera);
 				}
 
